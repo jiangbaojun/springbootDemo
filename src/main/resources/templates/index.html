@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共head-->
+    <th:block th:include="common/meta :: common_header" />
+    <!--当前head特有信息-->
+    <title>index</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+    <script type="application/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+  <div th:include="common/header :: headerFrag"></div>
+
+  <div class="content" th:text="${content}"></div>
+  <button onclick="showMe()">who am i</button>
+
+  <div th:include="common/footer :: footerFrag"></div>
+</body>
+</html>

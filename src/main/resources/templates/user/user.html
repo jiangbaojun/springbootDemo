@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共head，传递title-->
+    <th:block th:include="common/meta :: common_header" />
+    <!--当前head特有信息-->
+    <title>user page</title>
+    <script type="application/javascript" th:src="@{/user/user.js}"></script>
+</head>
+<body>
+  <div th:include="common/header :: headerFrag"></div>
+
+  <div class="content" th:text="${userContent}"></div>
+  <!--在事件函数上传参，只允许数字和布尔类型。其他类型建议使用data-属性放置,在事件中获得-->
+  <button th:attr="data-hello=${userContentHello}" th:onclick="'javascript:showMe('+${userContent}+')' ">who am i</button>
+  <button th:onclick="showMe()">who am i</button>
+
+<div th:include="common/footer :: footerFrag"></div>
+</body>
+</html>

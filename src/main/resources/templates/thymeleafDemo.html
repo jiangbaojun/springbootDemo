@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>thymeleafDemo</title>
+    <style type="text/css">
+        .odd{
+            background-color: #fff;
+        }
+        .even{
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    "${result}"
+    <hr>
+    <p th:text="'hello'+${result}+'您好1'">123</p>
+    <hr>
+    /*获得session属性，使用session.属性*/
+    <p>Name: <span th:text="${name}">nothing</span>.</p>
+    <p>Name: <span th:text="${session.name}">nothing</span>.</p>
+    <hr>
+    /*对象属性*/
+    <p th:text="${user}">123</p>
+    <p>Name: <span th:text="${user.name}">xiaoming</span>.</p>
+    <p>age: <span th:text="${user.age}">12</span>.</p>
+    <p>birthday: <span th:text="${user.birthday}">2018-01-01</span>.</p>
+    <hr>
+    /*连接： th:href="@{/Controller/behavior(param1=1,param2=${person.id})}" 使用逗号隔开多个参数*/<br>
+    <a href="javascript:void(0)" th:href="@{/return/hrefTest(param1='6h好',param2=${user.id})}">view</a>
+
+    <hr>
+    /*case分支*/
+    <div th:switch="${user.age}">
+        <p th:case="12">小强12岁</p>   <!--  匹配12和'12'，用第一个匹配的 -->
+        <p th:case="16">小强16岁</p>
+        <p th:case="'12'">小强'12'岁</p>
+        <p th:case="*">没有匹配</p>
+    </div>
+
+    <hr>
+    /*if判断*/
+    <div th:if="${user.age} lt 15">
+        <p th:text="'小于'+${user}">nothing小于</p>
+    </div>
+    <div th:if="${user.age} gt 15">
+        <p th:text="'大于'+${user}">nothing大于</p>
+    </div>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <th style="color: red;">迭代索引</th>
+                <th style="color: red;">元素所处的位置索引</th>
+                <th style="color: red;">奇偶行</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>出生日期</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- 获取迭代的中间的状态，定义在iterStat中-->
+        <tr th:each="user,iterStat : ${userList}" th:class="${iterStat.odd} ? 'odd' : 'even'">
+            <!-- index: 当前迭代的索引 -->
+            <td th:text="${iterStat.index }"></td>
+            <!-- first: 当前元素是第一个元素; last: 当前元素是最后个元素 -->
+            <td th:text="${iterStat.first } ? '这是第一个元素':(${iterStat.last} ? '这是最后一个元素':'')" ></td>
+            <!-- 奇偶行 -->
+            <td th:text="${iterStat.odd} ? '奇数行' : '偶数行'" ></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.birthday}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
