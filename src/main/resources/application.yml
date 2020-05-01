@@ -1,4 +1,6 @@
-spring: 
+server:
+  port: 80
+spring:
   datasource:
     name: datasource
     url: jdbc:mysql://127.0.0.1:3306/hello?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
@@ -56,3 +58,4 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
