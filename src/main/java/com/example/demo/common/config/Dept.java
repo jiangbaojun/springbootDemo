@@ -3,7 +3,7 @@ package com.example.demo.common.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 测试自动配置属性
+ * 测试自动配置属性,配置勒种添加EnableConfigurationProperties注解支持
  * @Author: jiangbaojun
  * @Date: 2020/5/2 18:10
  */
