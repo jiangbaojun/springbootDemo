@@ -11,7 +11,6 @@ public class MyInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
         //只有返回true才会继续向下执行，返回false取消当前请求
         System.out.println("拦截器-prehandler");
         return true;

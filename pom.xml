@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>springbootDemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>HelloWorld</name>
     <packaging>jar</packaging>
@@ -49,7 +49,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>-->
-        <!--添加jetty，可替换tomcat-->
+        <!--添加undertow，可替换tomcat-->
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
