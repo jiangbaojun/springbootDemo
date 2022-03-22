@@ -1,6 +1,7 @@
 package com.example.demo.controller.test;
 
 import com.example.demo.model.user.User;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -40,7 +41,6 @@ public class ThlController {
      * @param model
      * @return 跳转url地址别名或者物理跳转地址
      */
-
     @RequestMapping(value = "/index2")
     public String index2(ModelMap model, HttpServletRequest request, HttpSession session) {
         User u = new User("1111","小强",12,new Date());

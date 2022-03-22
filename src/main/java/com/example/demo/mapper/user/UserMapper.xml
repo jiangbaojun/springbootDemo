@@ -3,8 +3,32 @@
 <mapper namespace="com.example.demo.mapper.user.UserMapper">
 
 	<resultMap type="com.example.demo.model.user.User" id="User"></resultMap>
-	
-    <select id="findByUsers" parameterType="string" resultType="User">
-        select u.id,u.name,u.age,u.birthday from user u
+
+    <select id="findByUsers" parameterType="string" resultMap="User">
+        select u.id,u.name,u.age,u.birthday from user1 u;
+--         insert into user1(id,name,age,birthday) value ("2","xiaoming", 12, now());
+    </select>
+
+    <insert id="batchTest2" parameterType="list">
+        insert into user1(id,name,age,birthday) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=VARCHAR},#{item.name,jdbcType=VARCHAR},#{item.age,jdbcType=INTEGER},#{item.birthday,jdbcType=DATE})
+        </foreach>
+    </insert>
+
+    <insert id="batchTest1" parameterType="list">
+        <foreach collection="list" item="item" separator=";">
+            insert into user1(id,name,age,birthday) values(
+                #{item.id,jdbcType=VARCHAR},#{item.name,jdbcType=VARCHAR},#{item.age,jdbcType=INTEGER},#{item.birthday,jdbcType=DATE})
+        </foreach>
+    </insert>
+
+    <insert id="insertOne" parameterType="com.example.demo.model.user.User">
+            insert into user1(id,name,age,birthday) values(
+                #{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{birthday,jdbcType=DATE})
+    </insert>
+
+    <select id="queryOthers" resultType="map">
+        select * from user u left join dept d on d.deptno=u.id
     </select>
 </mapper>

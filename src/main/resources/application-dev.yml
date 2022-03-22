@@ -1,0 +1,51 @@
+server:
+  port: 80
+spring:
+  jackson:
+    time-zone: GMT+8
+  datasource:
+    name: datasource
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db1?allowMultiQueries=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 12345678
+    druid:
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java,src/main/resources/templates
+      exclude: WEB-INF/**
+  application:
+    name: thymeleaf
+  thymeleaf:
+    enabled: true
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    suffix: .html
+    prefix: classpath:/templates/
+  web:
+    resources:
+      static-locations: classpath:/templates/,classpath:/static/
+mybatis:
+  mapper-locations: classpath:com.example.demo.mapper/*/*.xml
+  type-aliases-package: com.example.demo.model
+pagehelper:
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+dept:
+  name: 11

@@ -11,13 +11,14 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 /**
  * 配置
  */
 @Configuration
 @EnableConfigurationProperties(Dept.class)
-public class MyConfig implements WebMvcConfigurer {
-//
+public class AppConfig implements WebMvcConfigurer {
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //添加拦截器
