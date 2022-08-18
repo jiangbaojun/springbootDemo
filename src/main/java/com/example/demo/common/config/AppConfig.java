@@ -1,9 +1,7 @@
 package com.example.demo.common.config;
 
-import com.example.demo.common.DynamicDateSerialize;
 import com.example.demo.common.filter.MyFilter;
 import com.example.demo.common.interceptor.MyInterceptor;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -20,10 +18,11 @@ import java.util.TimeZone;
  */
 @Configuration
 @EnableConfigurationProperties(Dept.class)
-public class MyConfig implements WebMvcConfigurer {
+public class AppConfig implements WebMvcConfigurer {
 
     private String DATE_FORMAT = "yyyy-MM-dd";
     private String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
