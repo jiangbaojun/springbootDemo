@@ -18,6 +18,7 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model, HttpServletRequest request){
         System.out.println(dept);
+        request.getSession();
     	model.addAttribute("content", "Hello Thymeleaf8");
         return "index";
     }

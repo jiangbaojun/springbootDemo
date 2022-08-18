@@ -1,24 +1,24 @@
 package com.example.demo.controller.user;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.example.demo.model.user.User;
+import com.example.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.model.user.User;
-import com.example.demo.service.user.UserService;
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -40,6 +40,39 @@ public class UserController {
     }
 
     /**
+     * 单条操作
+     */
+    @RequestMapping("/one")
+    @ResponseBody
+    public String one(HttpServletRequest request){
+        userService.insertOne(request.getParameter("name"));
+        return "complete";
+    }
+
+    /**
+     * 单条操作
+     */
+    @PostMapping("/post/one")
+    @ResponseBody
+    public String one(@RequestBody User user){
+        if(user.getBirthday()==null){
+            user.setBirthday(new Date());
+        }
+        userService.insertOne(user);
+        return "complete";
+    }
+
+    /**
+     * 批量操作
+     */
+    @RequestMapping("/batch")
+    @ResponseBody
+    public String batch(HttpServletRequest request){
+        userService.batch();
+        return "complete";
+    }
+
+    /**
      * 分页查询
      * @param request
      * @return
@@ -49,5 +82,4 @@ public class UserController {
     public List<User> test2(HttpServletRequest request){
         return userService.findByUsersPage().getList();
     }
-
 }

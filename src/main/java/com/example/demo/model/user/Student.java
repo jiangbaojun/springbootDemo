@@ -1,30 +1,28 @@
 package com.example.demo.model.user;
 
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
 /**
  * 用户实体
  */
-public class User {
+public class Student {
 
     private String id;
     private String name;
     private Integer age;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
-    private Organization org;
+    private String grade;
 
-    public User(String id, String name, Integer age, Date birthday) {
+    public Student(String id, String name, Integer age, Date birthday, String grade) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.birthday = birthday;
+        this.grade = grade;
     }
 
-    public User() {
+    public Student() {
     }
 
     public String getId() {
@@ -59,22 +57,22 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Organization getOrg() {
-        return org;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setOrg(Organization org) {
-        this.org = org;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Student{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", birthday=" + birthday +
-                ", org=" + org +
+                ", grade='" + grade + '\'' +
                 '}';
     }
 }

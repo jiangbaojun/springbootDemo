@@ -18,7 +18,6 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
 
         //添加自定义的属性
         errorAttributes.put("reason","完了，你写的代码又产生了一次线上事故");
-        // 你可以看一下这个方法的参数webRequest这个对象，我相信你肯定能发现好东西
 
         return errorAttributes;
     }

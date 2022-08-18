@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.user.TestMapper">
+
+    <select id="queryOthers" resultType="map">
+        <!-- select * from user u left join dept d on d.deptno=u.id -->
+        <!-- select * from orders o left join user u on o.userid=u.id -->
+        select * from goods g, goods_info i, orders o where i.gid=g.id and g.oid=o.id
+    </select>
+
+    <select id="queryTb1" resultType="map">
+        select * from tb1
+    </select>
+
+    <insert id="addOrders" parameterType="map">
+        insert into orders(id,userid) values(#{id,jdbcType=VARCHAR},#{userid,jdbcType=VARCHAR})
+    </insert>
+
+
+</mapper>
