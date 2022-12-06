@@ -30,7 +30,6 @@ public class MyHealthIndicator extends AbstractHealthIndicator {
 		if(i%3==0){
 			builder.down()
 					.withDetail("error", "test error")
-					.withDetail("error", "test error")
 					.withDetail("detail", "modulo zero");
 		}else{
 			builder.up()
