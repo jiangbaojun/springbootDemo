@@ -41,7 +41,7 @@ spring:
       exclude: WEB-INF/**
   #静态资源，添加templates为了访问html同目录下js
   application:
-    name: thymeleaf
+    name: springbootDemo
   # 模板配置
   thymeleaf:
     # 是否为Web框架启用Thymeleaf视图分辨率。

@@ -19,6 +19,12 @@ public class TestController {
 	@Autowired
 	private TestService testService;
 
+    @RequestMapping("/sync")
+    public String syncTest(HttpServletRequest request){
+        testService.syncTest();
+        return "ok";
+    }
+
     @RequestMapping("/tb1")
     public List<Map<String, Object>> queryTb1(HttpServletRequest request){
         return testService.queryTb1();

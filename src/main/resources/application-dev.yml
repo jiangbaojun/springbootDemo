@@ -43,7 +43,7 @@ spring:
   resources:
     static-locations: classpath:/templates/,classpath:/static/
   application:
-    name: thymeleaf
+    name: springbootDemo
   # 模板配置
   thymeleaf:
     # 是否为Web框架启用Thymeleaf视图分辨率。
@@ -68,5 +68,16 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
 dept:
   name: 11
