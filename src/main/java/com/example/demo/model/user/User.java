@@ -2,6 +2,7 @@ package com.example.demo.model.user;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -15,6 +16,8 @@ public class User {
     private Integer age;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+3")
+    private Date birthdayCustom;
     private Organization org;
 
     public User(String id, String name, Integer age, Date birthday) {

@@ -1,24 +1,27 @@
 package com.example.demo.common;
 
+import com.example.demo.util.SpringContextHolder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.springframework.util.StringUtils;
+import org.springframework.context.i18n.TimeZoneAwareLocaleContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-
+/**
+ * 自定义时间序列换方式
+ */
 public class DynamicDateSerialize extends StdSerializer<Date> implements ContextualSerializer {
     private BeanProperty beanProperty;
 
@@ -39,19 +42,34 @@ public class DynamicDateSerialize extends StdSerializer<Date> implements Context
         }
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//            TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-            //获取动态时区，。本例从head中获取，实际上也可以从登录用户信息、参数、cookie等方式获取
-            //请注意，如果在配置类中全局设置。需要额外考虑从外部接口（非数据库）获得的时间数据
-            String timeZoneNum = request.getHeader("x-time-zone");
-            String timeZoneId = "GMT"+timeZoneNum;
-            if(StringUtils.isEmpty(timeZoneNum)){
-                timeZoneId = "GMT+8";
+            TimeZone timeZone = null;
+            String datePattern = null;
+            //优先属性注解
+            JsonFormat jsonFormat = beanProperty.getMember().getAnnotation(JsonFormat.class);
+            if(jsonFormat!=null && jsonFormat.timezone()!=null){
+                try {
+                    datePattern = jsonFormat.pattern();
+                    timeZone = TimeZone.getTimeZone(jsonFormat.timezone());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            DateTimeZone timeZone = DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId));
-            DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-            // 把数据库中获得的时间数据，转换为对应时区的时间。
-            // 注意数据库jdbc连接上的时区配置，建议使用0时区。数据库插入，使用的是jdbc连接上的时区.相当于数据库存储0时区时间，取出展示时，根据不同时区做转换
-            String result = format.withZone(timeZone).print(date.getTime());
+            if(timeZone==null){
+                //从LocalContext中获取
+                TimeZoneAwareLocaleContext timeZoneAwareLocaleContext = (TimeZoneAwareLocaleContext) SpringContextHolder.getBean(CookieLocaleResolver.class).resolveLocaleContext(request);
+                timeZone = timeZoneAwareLocaleContext.getTimeZone();
+            }
+            //可以考虑从用户信息获取。本例从head中获取
+            if(datePattern==null) {
+                datePattern = request.getHeader("x-date-pattern");
+            }
+            if(datePattern==null){
+                datePattern = "yyyy-MM-dd HH:mm:ss";
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+            dateFormat.setTimeZone(timeZone);
+
+            String result = dateFormat.format(date);
             jsonGenerator.writeString(result);
         } catch (Exception e) {
             e.printStackTrace();

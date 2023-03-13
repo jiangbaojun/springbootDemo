@@ -4,8 +4,8 @@
 
 	<resultMap type="com.example.demo.model.user.User" id="User"></resultMap>
 
-    <select id="findByUsers" parameterType="string" resultMap="User">
-        select u.id,u.name,u.age,u.birthday from user u;
+    <select id="findByUsers" parameterType="string" resultType="com.example.demo.model.user.User">
+        select u.id,u.name,u.age,u.birthday, u.birthday birthdayCustom from user u;
 --         insert into user(id,name,age,birthday) value ("2","xiaoming", 12, now());
     </select>
 

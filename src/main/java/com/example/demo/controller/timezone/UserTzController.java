@@ -24,7 +24,8 @@ public class UserTzController {
     @RequestMapping("/all")
     @ResponseBody
     public List<User> test1(HttpServletRequest request){
-        return userService.findByUsersAll();
+        List<User> usersAll = userService.findByUsersAll();
+        return usersAll;
     }
 
     @RequestMapping("/test/query/one")
