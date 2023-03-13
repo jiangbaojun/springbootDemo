@@ -16,6 +16,8 @@
 *.iml
 *.ipr
 
+rebel.xml
+
 ### NetBeans ###
 /nbproject/private/
 /build/
