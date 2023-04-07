@@ -1,6 +1,28 @@
 server:
   port: 88
+com:
+  mrk:
+    async:
+      override-default-executor: false
+      auto-create-default: true
+      enable-custom: true
+      config:
+        myAsyncTaskPool:
+          thread-group-name: my-async
+          pool:
+            core-size: 2
+            max-size: 5
+            queue-capacity: 10
+            keep-alive: 60S
 spring:
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 200
+        keep-alive: 60S
+      thread-name-prefix: "custom-async-"
   jackson:
     time-zone: GMT+8
   datasource:
