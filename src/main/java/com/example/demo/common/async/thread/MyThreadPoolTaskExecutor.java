@@ -1,5 +1,6 @@
 package com.example.demo.common.async.thread;
 
+import com.example.demo.common.ThreadGroupManager;
 import com.example.demo.common.async.DefaultAsyncTaskExecutePool;
 import com.example.demo.common.async.properties.AsyncPool;
 import com.example.demo.common.async.properties.AsyncProperties;
@@ -15,7 +16,7 @@ import java.util.concurrent.*;
  * @author jiangbaojun
  * @date 2023/4/6 11:30
  */
-public class MyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
+public class MyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor implements ThreadGroupManager {
 
     private int queueCapacity;
     private int coreSize;
@@ -63,6 +64,7 @@ public class MyThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
             MyThreadPoolExecutor myThreadPoolExecutor = new MyThreadPoolExecutor(
                     coreSize, maxSize, keepAlive, TimeUnit.SECONDS,
                     new LinkedBlockingQueue<>(queueCapacity), new MyThreadFactory(this.threadGroup), new ThreadPoolExecutor.AbortPolicy());
+            myThreadPoolExecutor.allowCoreThreadTimeOut(allowCoreThreadTimeout);
             Class aClass = ThreadPoolTaskExecutor.class;
             Field field = aClass.getDeclaredField("threadPoolExecutor");
             field.setAccessible(true);

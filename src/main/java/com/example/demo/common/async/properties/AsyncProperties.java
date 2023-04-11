@@ -15,8 +15,8 @@ public class AsyncProperties {
     private Boolean overrideDefaultExecutor;
     /**是否已主动声明默认的ThreadPoolTaskExecutor（声明时可以使用@Primary注解）。false，会自动创建一个默认的*/
     private Boolean autoCreateDefault;
-    /**开启的自定义ThreadPoolTaskExecutor*/
-    private Boolean enableCustom;
+    /**是否自动创建config map配置的ThreadPoolTaskExecutor*/
+    private Boolean autoCreateCustomer = false;
     private Map<String, AsyncPool> config = new HashMap<>();
 
     public Boolean getOverrideDefaultExecutor() {
@@ -27,12 +27,12 @@ public class AsyncProperties {
         this.overrideDefaultExecutor = overrideDefaultExecutor;
     }
 
-    public Boolean getEnableCustom() {
-        return enableCustom;
+    public Boolean getAutoCreateCustomer() {
+        return autoCreateCustomer;
     }
 
-    public void setEnableCustom(Boolean enableCustom) {
-        this.enableCustom = enableCustom;
+    public void setAutoCreateCustomer(Boolean autoCreateCustomer) {
+        this.autoCreateCustomer = autoCreateCustomer;
     }
 
     public Boolean getAutoCreateDefault() {

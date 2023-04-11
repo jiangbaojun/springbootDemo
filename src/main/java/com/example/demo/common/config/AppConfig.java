@@ -4,6 +4,7 @@ import com.example.demo.common.DynamicDateSerialize;
 import com.example.demo.common.async.properties.AsyncProperties;
 import com.example.demo.common.filter.MyFilter;
 import com.example.demo.common.interceptor.MyInterceptor;
+import com.example.demo.common.threadpool.properties.ThreadPoolProperties;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -20,7 +21,7 @@ import java.util.TimeZone;
  * 配置
  */
 @Configuration
-@EnableConfigurationProperties({Dept.class, AsyncProperties.class})
+@EnableConfigurationProperties({Dept.class, AsyncProperties.class, ThreadPoolProperties.class})
 public class AppConfig implements WebMvcConfigurer {
 
     private String DATE_FORMAT = "yyyy-MM-dd";

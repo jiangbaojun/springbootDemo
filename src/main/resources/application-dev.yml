@@ -3,9 +3,9 @@ server:
 com:
   mrk:
     async:
-      override-default-executor: false
-      auto-create-default: true
-      enable-custom: true
+      override-default-executor: true
+      auto-create-default: false
+      auto-create-customer: true
       config:
         myAsyncTaskPool:
           thread-group-name: my-async
@@ -14,6 +14,25 @@ com:
             max-size: 5
             queue-capacity: 10
             keep-alive: 60S
+    thread:
+      before-clear: true
+      pools:
+        myPool1:
+          thread-group-name: gn1
+          before-clear: false
+          config:
+            core-size: 2
+            max-size: 5
+            queue-capacity: 10
+            keep-alive: 60S
+        myPool2:
+          config:
+            core-size: 10
+            max-size: 50
+            queue-capacity: 100
+            keep-alive: 60S
+
+
 spring:
   task:
     execution:

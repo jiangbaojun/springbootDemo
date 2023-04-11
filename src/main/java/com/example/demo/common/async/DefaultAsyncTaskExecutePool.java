@@ -2,6 +2,7 @@ package com.example.demo.common.async;
 
 import com.example.demo.common.async.properties.AsyncProperties;
 import com.example.demo.common.async.thread.MyThreadPoolTaskExecutor;
+import com.example.demo.util.SpringContextHolder;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -47,6 +48,13 @@ public class DefaultAsyncTaskExecutePool implements AsyncConfigurer {
         return builder.build();
     }
 
+    @Bean(DEFAULT_TASK_EXECUTOR)
+    @ConditionalOnProperty(name="com.mrk.async.override-default-executor", havingValue = "true", matchIfMissing = false)
+    public Executor defaultAsyncTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new MyThreadPoolTaskExecutor(properties, asyncProperties, DEFAULT_TASK_EXECUTOR);
+        return executor;
+    }
+
     /**
      * 只有@Async注解，不指定value值时会调用，用于覆盖默认的ThreadPoolTaskExecutor
      * @date 2023/4/6 20:11
@@ -54,9 +62,7 @@ public class DefaultAsyncTaskExecutePool implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         if(asyncProperties.getOverrideDefaultExecutor()){
-            ThreadPoolTaskExecutor executor = new MyThreadPoolTaskExecutor(properties, asyncProperties, DEFAULT_TASK_EXECUTOR);
-            executor.initialize();
-            return executor;
+            return SpringContextHolder.getApplicationContext().getBean(DEFAULT_TASK_EXECUTOR, ThreadPoolTaskExecutor.class);
         }
         return null;
     }

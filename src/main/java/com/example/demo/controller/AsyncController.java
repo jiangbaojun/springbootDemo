@@ -34,16 +34,16 @@ public class AsyncController {
     }
 
     @RequestMapping("/threads")
-    public List<String> t3(HttpServletRequest request, @RequestParam(required = false, value = "name") String name){
-        Thread[] allThreads = ThreadLocalUtil.getAllThreads();
+    public List<String> t3(HttpServletRequest request, @RequestParam(value = "name") String name){
+        Thread[] allThreads = ThreadLocalUtil.getAllThreads(name);
         List<String> collect = Arrays.stream(allThreads).map((t) -> t.getName()).collect(Collectors.toList());
         return collect;
     }
 
     @RequestMapping("/thread/local")
-    public Map<String, Map<String, Object>> t3(@RequestParam(required = false, value = "name") String name){
+    public Map<String, Map<String, Object>> t3(@RequestParam(value = "name") String name){
         Map<String, Map<String, Object>> result = new HashMap<>();
-        Thread[] allThreads = ThreadLocalUtil.getAllThreads();
+        Thread[] allThreads = ThreadLocalUtil.getAllThreads(name);
         for (Thread thread : allThreads) {
             Map<WeakReference<ThreadLocal>, ThreadLocalUtil.ThreadLocalValue> threadLocalMap = ThreadLocalUtil.getThreadLocalMap(thread);
             Map<String, Object> map = new HashMap<>();
@@ -58,9 +58,9 @@ public class AsyncController {
     }
 
     @RequestMapping("/thread/local/reset")
-    public void t4(@RequestParam(required = false, value = "name") String name) throws NoSuchFieldException, IllegalAccessException {
+    public void t4(@RequestParam(value = "name") String name) throws NoSuchFieldException, IllegalAccessException {
         Map<String, Map<String, Object>> result = new HashMap<>();
-        Thread[] allThreads = ThreadLocalUtil.getAllThreads();
+        Thread[] allThreads = ThreadLocalUtil.getAllThreads(name);
         for (Thread thread : allThreads) {
             Map<WeakReference<ThreadLocal>, ThreadLocalUtil.ThreadLocalValue> threadLocalMap = ThreadLocalUtil.getThreadLocalMap(thread);
             ThreadLocalUtil.resetThreadLocals(threadLocalMap);

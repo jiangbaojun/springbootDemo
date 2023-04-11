@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
 /**
  * 自定义@Async线程池
+ * 已在CustomTaskExecutePoolAutoConfig中自动创建线程
  * @author jiangbaojun
  * @date 2023/4/4 15:48
  */
-@EnableAsync
-@Configuration
+//@EnableAsync
+//@Configuration
+@Deprecated
 public class CustomAsyncTaskExecutePool {
 
     @Autowired

@@ -2,6 +2,7 @@ package com.example.demo.common.async.thread;
 
 import com.example.demo.common.async.test.ThreadLocalTest;
 
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -21,12 +22,14 @@ public class MyThreadPoolExecutor extends ThreadPoolExecutor {
      */
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
-        System.out.println("start:"+ThreadLocalTest.local.get());
+        ThreadLocalTest.common.set(""+new Random().nextInt(100));
+        System.out.println("start common:"+ThreadLocalTest.common.get());
 
     }
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
-        System.out.println("after:"+ThreadLocalTest.local.get());
+        System.out.println("after common:"+ThreadLocalTest.common.get());
+        ThreadLocalTest.common.remove();
     }
 }

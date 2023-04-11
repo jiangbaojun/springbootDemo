@@ -1,6 +1,6 @@
 package com.example.demo.common.async.test;
 
-import com.example.demo.common.async.thread.MyThreadPoolTaskExecutor;
+import com.example.demo.common.ThreadGroupManager;
 import com.example.demo.util.SpringContextHolder;
 import lombok.Data;
 import org.apache.commons.lang3.ArrayUtils;
@@ -18,15 +18,15 @@ import java.util.Map;
 public class ThreadLocalUtil {
 
     /**
-     * 获得指定线程组包含的线程
-     * 本例：MyThreadPoolTaskExecutor bean使用的线程组
+     * 获得指定线程组下的线程
+     * @param poolBeanName ThreadGroupManager bean名称
      * @return java.lang.Thread[]
-     * @date 2023/4/6 15:55
+     * @date 2023/4/6 18:13
      */
-    public static Thread[] getAllThreads(){
+    public static Thread[] getAllThreads(String poolBeanName){
         Thread[] threads = new Thread[0];
         try{
-            MyThreadPoolTaskExecutor bean = SpringContextHolder.getBean(MyThreadPoolTaskExecutor.class);
+            ThreadGroupManager bean = SpringContextHolder.getBean(poolBeanName);
             ThreadGroup threadGroup = bean.getThreadGroup();
             int count = threadGroup.activeCount();
             threads = new Thread[count];
