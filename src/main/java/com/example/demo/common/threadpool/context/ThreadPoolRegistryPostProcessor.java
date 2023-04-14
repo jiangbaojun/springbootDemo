@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -38,7 +39,15 @@ public class ThreadPoolRegistryPostProcessor implements EnvironmentAware, BeanDe
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 		BindResult<ThreadPoolProperties> restServiceBindResult = Binder.get(environment).bind(ThreadPoolConstant.CONFIG_PREFIX, ThreadPoolProperties.class);
-		ThreadPoolProperties threadPoolProperties = restServiceBindResult.get();
+		ThreadPoolProperties threadPoolProperties = null;
+		try {
+			threadPoolProperties = restServiceBindResult.get();
+		} catch (NoSuchElementException e) {
+			System.out.println(ThreadPoolConstant.CONFIG_PREFIX+" not config");
+		}
+		if(threadPoolProperties==null || !threadPoolProperties.getEnable()){
+			return;
+		}
 		if(threadPoolProperties==null || !threadPoolProperties.getEnable()){
 			return;
 		}

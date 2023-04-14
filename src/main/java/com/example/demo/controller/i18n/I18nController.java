@@ -1,6 +1,7 @@
 package com.example.demo.controller.i18n;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 public class I18nController {
 
     @Autowired
+    @Qualifier("messageSource")
     private MessageSource messageSource;
-	
+
+    @Autowired
+    @Qualifier("myMessageSource")
+    private MessageSource myMessageSource;
+
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request){
         String username = messageSource.getMessage("username", null, LocaleContextHolder.getLocale());
@@ -31,8 +37,10 @@ public class I18nController {
     @RequestMapping("/test")
     @ResponseBody
     public String test1(Model model, HttpServletRequest request){
-        //LocaleContextHolder.getLocale()获取当前的local，本例MyCookieLocaleResolver中获取
-        return messageSource.getMessage("username", null, LocaleContextHolder.getLocale());
+        String username = myMessageSource.getMessage("username", null, LocaleContextHolder.getLocale());
+        //LocaleContextHolder.getLocale()获取当前的local，通过拦截LocaleChangeInterceptor，拦截lang参数，调用localeResolver.setLocale(...)设置
+        String username1 = messageSource.getMessage("username", null, LocaleContextHolder.getLocale());
+        return username +":"+ username1;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.demo.common;
 
-import com.example.demo.util.SpringContextHolder;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -8,10 +7,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.springframework.context.i18n.TimeZoneAwareLocaleContext;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -45,19 +43,22 @@ public class DynamicDateSerialize extends StdSerializer<Date> implements Context
             TimeZone timeZone = null;
             String datePattern = null;
             //优先属性注解
-            JsonFormat jsonFormat = beanProperty.getMember().getAnnotation(JsonFormat.class);
-            if(jsonFormat!=null && jsonFormat.timezone()!=null){
-                try {
-                    datePattern = jsonFormat.pattern();
-                    timeZone = TimeZone.getTimeZone(jsonFormat.timezone());
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if(beanProperty!=null){
+                JsonFormat jsonFormat = beanProperty.getMember().getAnnotation(JsonFormat.class);
+                if(jsonFormat!=null && jsonFormat.timezone()!=null){
+                    try {
+                        datePattern = jsonFormat.pattern();
+                        timeZone = TimeZone.getTimeZone(jsonFormat.timezone());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             if(timeZone==null){
-                //从LocalContext中获取
-                TimeZoneAwareLocaleContext timeZoneAwareLocaleContext = (TimeZoneAwareLocaleContext) SpringContextHolder.getBean(CookieLocaleResolver.class).resolveLocaleContext(request);
-                timeZone = timeZoneAwareLocaleContext.getTimeZone();
+                timeZone = LocaleContextHolder.getTimeZone();
+                //从LocalContext中获取,也可以从用户信息、参数、head等获取
+//                TimeZoneAwareLocaleContext timeZoneAwareLocaleContext = (TimeZoneAwareLocaleContext) SpringContextHolder.getBean(CookieLocaleResolver.class).resolveLocaleContext(request);
+//                timeZone = timeZoneAwareLocaleContext.getTimeZone();
             }
             //可以考虑从用户信息获取。本例从head中获取
             if(datePattern==null) {

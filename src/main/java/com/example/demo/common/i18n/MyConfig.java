@@ -1,8 +1,10 @@
 package com.example.demo.common.i18n;
 
+import com.example.demo.common.i18n.message.MyMessageResource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
@@ -18,7 +20,8 @@ public class MyConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver(){
     	//添加自己重写的MyCookieLocaleResolver
-        return new MyCookieLocaleResolver();
+//        return new MyCookieLocaleResolver();
+        return new MyLocaleResolver();
     }
 
 	//配置拦截器获取URL中的key=“lang” （?lang=zh_CN）
@@ -42,15 +45,31 @@ public class MyConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public MessageSource myMessageSource() {
+        //可以多个共存，使用时分别注入
+        return new MyMessageResource();
+    }
+
+    /**
+     * 有自动配置，详见：org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration
+     */
+    @Bean(AbstractApplicationContext.MESSAGE_SOURCE_BEAN_NAME)
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+        //指定properties文件位置,使用自定义路径，需要file:开头
+        messageSource.setBasenames("file:/data/i18n/test", "file:/data/i18n_common/test");
         //指定properties文件位置。查找classpath目录下的/properties/i18n目录，以test开头的properties文件（文件名采用test加上本地化的字符）
-        messageSource.setBasename("classpath:/i18n/test");
+//        messageSource.setBasename("classpath:/i18n/test");
         //可以设置多个目录
 //        messageSource.setBasenames("classpath:/properties/i18n1", "classpath:/properties/i18n2");
-//        messageSource.setCacheSeconds(10); //reload messages every 10 seconds,不建议生产设置
+        messageSource.setCacheSeconds(8);
         messageSource.setDefaultEncoding("UTF-8");
+        //当无法匹配，使用本地local
+        messageSource.setFallbackToSystemLocale(false);
+        //无法匹配，使用key作为message
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
+
 }

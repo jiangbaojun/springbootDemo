@@ -15,6 +15,7 @@ com:
             queue-capacity: 10
             keep-alive: 60S
     thread:
+      enable: true
       before-clear: true
       pools:
         myPool1:

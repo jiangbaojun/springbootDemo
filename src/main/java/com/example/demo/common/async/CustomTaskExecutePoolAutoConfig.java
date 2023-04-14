@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * 自动创建自定义的ThreadPoolTaskExecutor
@@ -35,8 +36,20 @@ public class CustomTaskExecutePoolAutoConfig implements EnvironmentAware, BeanDe
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         BindResult<AsyncProperties> restServiceBindResult = Binder.get(environment).bind("com.mrk.async", AsyncProperties.class);
         BindResult<TaskExecutionProperties> restServiceBindResultDefault = Binder.get(environment).bind("spring.task.execution", TaskExecutionProperties.class);
-        AsyncProperties asyncProperties = restServiceBindResult.get();
-        TaskExecutionProperties properties = restServiceBindResultDefault.get();
+        AsyncProperties asyncProperties;
+        try {
+            asyncProperties = restServiceBindResult.get();
+        } catch (NoSuchElementException e) {
+            System.out.println("com.mrk.async not config");
+            asyncProperties = new AsyncProperties();
+        }
+        TaskExecutionProperties properties;
+        try {
+            properties = restServiceBindResultDefault.get();
+        } catch (NoSuchElementException e) {
+            properties = new TaskExecutionProperties();
+        }
+
         if(asyncProperties==null || !asyncProperties.getAutoCreateCustomer()){
             return;
         }
