@@ -16,5 +16,4 @@
         insert into orders(id,userid) values(#{id,jdbcType=VARCHAR},#{userid,jdbcType=VARCHAR})
     </insert>
 
-
 </mapper>

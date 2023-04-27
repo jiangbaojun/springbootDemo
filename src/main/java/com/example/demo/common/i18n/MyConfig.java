@@ -1,6 +1,6 @@
 package com.example.demo.common.i18n;
 
-import com.example.demo.common.i18n.message.MyMessageResource;
+import com.example.demo.common.i18n.message.MyMessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +47,7 @@ public class MyConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource myMessageSource() {
         //可以多个共存，使用时分别注入
-        return new MyMessageResource();
+        return new MyMessageSource();
     }
 
     /**
@@ -58,7 +58,7 @@ public class MyConfig implements WebMvcConfigurer {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
         //指定properties文件位置,使用自定义路径，需要file:开头
-        messageSource.setBasenames("file:/data/i18n/test", "file:/data/i18n_common/test");
+        messageSource.setBasenames("file:d:/data/i18n/test", "file:d:/data/i18n_common/test");
         //指定properties文件位置。查找classpath目录下的/properties/i18n目录，以test开头的properties文件（文件名采用test加上本地化的字符）
 //        messageSource.setBasename("classpath:/i18n/test");
         //可以设置多个目录

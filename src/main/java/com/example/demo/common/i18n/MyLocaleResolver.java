@@ -22,7 +22,7 @@ public class MyLocaleResolver extends AbstractLocaleContextResolver {
         LocaleContext localeContext = new TimeZoneAwareLocaleContext() {
             @Override
             public Locale getLocale() {
-                String myLang = request.getParameter("my_lang");
+                String myLang = request.getParameter("lang");
                 Locale locale = StringUtils.parseLocale(myLang);
                 return locale;
             }

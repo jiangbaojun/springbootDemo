@@ -8,8 +8,7 @@ import org.springframework.core.io.ResourceLoader;
 import java.text.MessageFormat;
 import java.util.*;
 
-public class MyMessageResource extends AbstractMessageSource implements ResourceLoaderAware
-{
+public class MyMessageSource extends AbstractMessageSource implements ResourceLoaderAware{
     private ResourceLoader resourceLoader;
 
     /**
@@ -18,7 +17,7 @@ public class MyMessageResource extends AbstractMessageSource implements Resource
     protected final String MAP_SPLIT_CODE = "|";
     private final Map<String, String> properties = new HashMap<String, String>();
 
-    public MyMessageResource()
+    public MyMessageSource()
     {
         reload();
     }
