@@ -1,3 +1,13 @@
 spring:
   profiles:
-    active: dev
+    # 如果dev和prod有相同的，后面覆盖前面的。也就说后面配置的生效
+    # 如果配置了spring.config.additional-location，那么additional-location中的会覆盖此处prod, dev中相同的配置项。
+    #   这块要注意2.4.0之前的版本，恰好相反。additional-location中配置的属性优先级低，优先使用此处配置的dev和prod中的配置项。
+    #   详见：https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/boot-features-external-config.html
+    #        https://docs.spring.io/spring-boot/docs/2.7.12/reference/html/features.html#features.external-config.files
+    active: prod, dev
+
+dept:
+  name: main-name
+  address: main-address
+  age: 99

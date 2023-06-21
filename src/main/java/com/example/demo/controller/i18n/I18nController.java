@@ -24,6 +24,10 @@ public class I18nController {
     @Qualifier("myMessageSource")
     private MessageSource myMessageSource;
 
+    @Autowired
+    @Qualifier("bundleMessageSource")
+    private MessageSource bundleMessageSource;
+
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request){
         String username = messageSource.getMessage("username", null, LocaleContextHolder.getLocale());

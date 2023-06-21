@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class MyCookieLocaleResolver extends CookieLocaleResolver {
@@ -33,5 +34,10 @@ public class MyCookieLocaleResolver extends CookieLocaleResolver {
         TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
         return timeZone;
 //        return super.determineDefaultTimeZone(request);
+    }
+
+    public static void main(String[] args) {
+        Locale zhCn = StringUtils.parseLocale("zh_cn");
+        System.out.println(zhCn);
     }
 }

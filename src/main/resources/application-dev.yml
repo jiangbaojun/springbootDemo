@@ -1,5 +1,11 @@
 server:
-  port: 88
+  port: 66
+dept:
+  name: xiaoqiang
+  address: beijing
+  dev: attr-dev
+deptdev:
+  name: dev-name
 com:
   mrk:
     async:
@@ -52,11 +58,16 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
 #      url: jdbc:mysql://123.57.250.205:6446/db1?allowMultiQueries=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-#      url: jdbc:mysql://127.0.0.1:3306/db1?allowMultiQueries=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-      url: jdbc:mysql://127.0.0.1:3306/db1?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B0
+#      url: jdbc:mysql://127.0.0.1:3306/db1?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B0
 #      url: jdbc:mysql://127.0.0.1:8066/TESTDB?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+
+#      url: jdbc:mysql://127.0.0.1:3306/db1?allowMultiQueries=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+#      username: root
+#      password: 12345678
+
+      url: jdbc:mysql://dev-03.cluster-c9qe4y0vrvda.rds.cn-northwest-1.amazonaws.com.cn:3306/eclinical_admin?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC&allowMultiQueries=true&serverTimeZone=UTC
       username: root
-      password: 12345678
+      password: 8YTJWOuA7XRK17wRQnw4
 
 #      url: jdbc:oracle:thin:@140.100.130.112:1521:orcl
 #      driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -121,5 +132,3 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-dept:
-  name: 11

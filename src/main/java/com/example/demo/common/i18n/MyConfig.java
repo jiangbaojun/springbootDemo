@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -70,6 +71,14 @@ public class MyConfig implements WebMvcConfigurer {
         //无法匹配，使用key作为message
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
+    }
+
+    @Bean("bundleMessageSource")
+    public MessageSource bundleMessageSource(){
+        ResourceBundleMessageSource resourceBundleMessageSource =new ResourceBundleMessageSource();
+        resourceBundleMessageSource.setDefaultEncoding("UTF-8");
+        resourceBundleMessageSource.setBasenames("i18n/test");
+        return resourceBundleMessageSource;
     }
 
 }
