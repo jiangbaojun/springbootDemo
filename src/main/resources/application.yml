@@ -1,10 +1,14 @@
 spring:
   profiles:
     # 如果dev和prod有相同的，后面覆盖前面的。也就说后面配置的生效
+    # 如果spring.config.location配置了多个。例如--spring.config.location=classpath:/application.yml,classpath:/application-dev.yml,/data/config/application-abx.yml，后面的优先级高,application-abx.yml覆盖application-dev.yml的
     # 如果配置了spring.config.additional-location，那么additional-location中的会覆盖此处prod, dev中相同的配置项。
     #   这块要注意2.4.0之前的版本，恰好相反。additional-location中配置的属性优先级低，优先使用此处配置的dev和prod中的配置项。
     #   详见：https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/boot-features-external-config.html
     #        https://docs.spring.io/spring-boot/docs/2.7.12/reference/html/features.html#features.external-config.files
+    # spring.config.location的使用，2.4.0版本之前之后还有一个区别。
+    #   之前的旧版本，只引入spring.config.location声明的配置文件
+    #   之后的新版本，会自动引入spring.profiles.active配置的对应文件，如application-dev.yml会被引入，即使spring.config.location不包含。如果想强制排除，可以设置环境变量来覆盖SPRING_CONFIG_LOCATION=abx
     active: prod, dev
 
 dept:
