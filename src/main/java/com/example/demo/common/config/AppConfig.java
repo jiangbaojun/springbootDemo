@@ -1,5 +1,6 @@
 package com.example.demo.common.config;
 
+import com.example.demo.common.DynamicDateDeserialize;
 import com.example.demo.common.DynamicDateSerialize;
 import com.example.demo.common.async.properties.AsyncProperties;
 import com.example.demo.common.filter.MyFilter;
@@ -14,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.TimeZone;
 
 /**
  * 配置
@@ -58,9 +57,10 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
         return builder -> {
-            builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+//            builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             builder.simpleDateFormat(DATE_TIME_FORMAT);
             builder.serializers(new DynamicDateSerialize());
+            builder.deserializers(new DynamicDateDeserialize());
 //            builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)));
 //            builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
         };

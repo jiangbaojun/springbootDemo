@@ -5,7 +5,7 @@
 	<resultMap type="com.example.demo.model.user.User" id="User"></resultMap>
 
     <select id="findByUsers" parameterType="string" resultType="com.example.demo.model.user.User">
-        select u.id,u.name,u.age,u.birthday, u.birthday birthdayCustom from user u;
+        select u.id,u.name,u.age,u.birthday, u.birthday birthdayCustom from user1 u;
 --         insert into user(id,name,age,birthday) value ("2","xiaoming", 12, now());
     </select>
 
@@ -24,11 +24,11 @@
     </insert>
 
     <insert id="insertOne" parameterType="com.example.demo.model.user.User">
-            insert into user(id,name,age,birthday) values(
+            insert into user1(id,name,age,birthday) values(
                 #{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{birthday,jdbcType=TIMESTAMP})
     </insert>
 
     <select id="queryOthers" resultType="map">
-        select * from user u left join dept d on d.deptno=u.id
+        select * from user1 u left join dept d on d.deptno=u.id
     </select>
 </mapper>
