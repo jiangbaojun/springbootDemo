@@ -38,4 +38,21 @@ public class TestService {
         System.out.println("end");
 
     }
+
+    /**
+     *
+     * @Async异步，返回值无效
+     * @return java.lang.String
+     */
+    @Async
+    public String syncTest1() {
+        System.out.println("start");
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end");
+        return "okk";
+    }
 }

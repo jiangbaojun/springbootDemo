@@ -46,6 +46,7 @@ public class AppConfig implements WebMvcConfigurer {
         //过滤器
         FilterRegistrationBean filter1 = new FilterRegistrationBean(new MyFilter());
         filter1.addUrlPatterns("/user/*");
+        filter1.setOrder(0);
         return filter1;
     }
 

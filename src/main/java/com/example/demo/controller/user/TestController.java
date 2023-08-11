@@ -25,6 +25,14 @@ public class TestController {
         return "ok";
     }
 
+    @RequestMapping("/sync1")
+    public String syncTest1(HttpServletRequest request){
+        //syncTest1方法使用了@Async注解，不能接收到返回值
+        String s = testService.syncTest1();
+        System.out.println("async 结果："+s);
+        return "ok";
+    }
+
     @RequestMapping("/tb1")
     public List<Map<String, Object>> queryTb1(HttpServletRequest request){
         return testService.queryTb1();
