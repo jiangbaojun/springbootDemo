@@ -4,6 +4,9 @@ dept:
   name: xiaoqiang
   address: beijing
   dev: attr-dev
+a:
+  b:
+    c: a
 deptdev:
   name: dev-name
 com:
