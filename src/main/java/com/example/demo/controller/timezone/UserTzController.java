@@ -1,7 +1,9 @@
 package com.example.demo.controller.timezone;
 
+import com.example.demo.common.DynamicDateDeserialize;
 import com.example.demo.model.user.User;
 import com.example.demo.service.user.UserService;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -22,11 +24,12 @@ public class UserTzController {
 
     /**
      *
-     * http://localhost:66/user/tz/test/deserialize2?birthday=11/05/2011
+     * http://localhost:66/user/tz/test/deserialize2?birthday=11/05/2011 16:20:00
      */
     @RequestMapping("/test/deserialize2")
     @ResponseBody
-    public String test2_1(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") Date birthday){
+    public String test2_1(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") @JsonDeserialize(using = DynamicDateDeserialize.class)
+                              Date birthday){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(birthday);
     }
 
@@ -37,6 +40,19 @@ public class UserTzController {
     @ResponseBody
     public String test2(@RequestBody User user){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getBirthday());
+    }
+
+    /**
+     * 测试序列化
+     * http://localhost:66/user/tz/test/serialize
+     * @apiNote head中添加9时区（MyLocaleResolver解析），x-time-zone +09:00,返回时间将会序列化（DynamicDateSerialize序列化）
+     * @return java.util.Date
+     * @date 2023/11/17 18:16
+     */
+    @RequestMapping("/test/serialize")
+    @ResponseBody
+    public Date test3(@RequestBody User user){
+        return user.getBirthday();
     }
 
     @RequestMapping("/all")
