@@ -1,9 +1,7 @@
 package com.example.demo.controller.timezone;
 
-import com.example.demo.common.DynamicDateDeserialize;
 import com.example.demo.model.user.User;
 import com.example.demo.service.user.UserService;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -28,7 +26,7 @@ public class UserTzController {
      */
     @RequestMapping("/test/deserialize2")
     @ResponseBody
-    public String test2_1(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") @JsonDeserialize(using = DynamicDateDeserialize.class)
+    public String test2_1(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
                               Date birthday){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(birthday);
     }

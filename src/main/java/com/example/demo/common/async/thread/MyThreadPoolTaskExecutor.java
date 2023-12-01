@@ -1,9 +1,9 @@
 package com.example.demo.common.async.thread;
 
-import com.example.demo.common.ThreadGroupManager;
 import com.example.demo.common.async.DefaultAsyncTaskExecutePool;
 import com.example.demo.common.async.properties.AsyncPool;
 import com.example.demo.common.async.properties.AsyncProperties;
+import com.example.demo.common.threadpool.ThreadGroupManager;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 

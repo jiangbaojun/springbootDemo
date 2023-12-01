@@ -1,6 +1,6 @@
 package com.example.demo.common.async.test;
 
-import com.example.demo.common.ThreadGroupManager;
+import com.example.demo.common.threadpool.ThreadGroupManager;
 import com.example.demo.util.SpringContextHolder;
 import lombok.Data;
 import org.apache.commons.lang3.ArrayUtils;

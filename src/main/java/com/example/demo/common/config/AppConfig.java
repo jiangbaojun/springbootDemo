@@ -1,7 +1,8 @@
 package com.example.demo.common.config;
 
-import com.example.demo.common.DynamicDateDeserialize;
-import com.example.demo.common.DynamicDateSerialize;
+import com.example.demo.common.param.MyHandlerMethodArgumentResolver;
+import com.example.demo.common.serialize.DynamicDateDeserialize;
+import com.example.demo.common.serialize.DynamicDateSerialize;
 import com.example.demo.common.async.properties.AsyncProperties;
 import com.example.demo.common.filter.MyFilter;
 import com.example.demo.common.interceptor.MyInterceptor;
@@ -11,10 +12,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * 配置
@@ -65,5 +69,10 @@ public class AppConfig implements WebMvcConfigurer {
 //            builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)));
 //            builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
         };
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new MyHandlerMethodArgumentResolver());
     }
 }

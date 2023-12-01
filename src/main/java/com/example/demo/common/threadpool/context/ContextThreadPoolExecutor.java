@@ -1,6 +1,6 @@
 package com.example.demo.common.threadpool.context;
 
-import com.example.demo.common.ThreadGroupManager;
+import com.example.demo.common.threadpool.ThreadGroupManager;
 import com.example.demo.common.threadpool.test.ThreadLocalTest;
 import com.example.demo.common.threadpool.test.UserExt;
 

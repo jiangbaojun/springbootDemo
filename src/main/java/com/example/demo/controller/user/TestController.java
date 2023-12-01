@@ -1,5 +1,6 @@
 package com.example.demo.controller.user;
 
+import com.example.demo.common.param.MyParam;
 import com.example.demo.service.user.TestService;
 import com.example.demo.util.Tutil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class TestController {
 
 	@Autowired
 	private TestService testService;
+
+    @RequestMapping("/t1")
+    public String t1(HttpServletRequest request, @MyParam String s1, @MyParam() String p1){
+        System.out.printf(s1);
+        System.out.printf(p1);
+        return s1+"-------"+p1;
+    }
 
     @RequestMapping("/sync")
     public String syncTest(HttpServletRequest request){

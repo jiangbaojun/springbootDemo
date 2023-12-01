@@ -1,4 +1,4 @@
-package com.example.demo.common;
+package com.example.demo.common.serialize;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;

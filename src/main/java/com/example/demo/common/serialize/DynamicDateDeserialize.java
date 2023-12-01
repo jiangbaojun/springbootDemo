@@ -1,4 +1,4 @@
-package com.example.demo.common;
+package com.example.demo.common.serialize;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -22,7 +22,7 @@ import java.util.TimeZone;
 /**
  * 自定义时间反序列换方式
  */
-public class DynamicDateDeserialize extends StdDeserializer<Date> implements ContextualDeserializer {
+public class DynamicDateDeserialize extends DateDeserializers.DateDeserializer implements ContextualDeserializer {
 
     //优先解析带时间的
     public static String[] DATE_TIME_FORMAT = new String[]{
@@ -36,10 +36,10 @@ public class DynamicDateDeserialize extends StdDeserializer<Date> implements Con
     private BeanProperty beanProperty;
 
     public DynamicDateDeserialize() {
-        super(Date.class);
+        super();
     }
     public DynamicDateDeserialize(BeanProperty beanProperty) {
-        super(Date.class);
+        super();
         this.beanProperty = beanProperty;
     }
 
