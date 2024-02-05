@@ -7,6 +7,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
@@ -16,8 +18,9 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
      */
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().isAssignableFrom(String.class)
-                && methodParameter.hasParameterAnnotation(MyParam.class);
+//        return methodParameter.getParameterType().isAssignableFrom(String.class)
+//                && methodParameter.hasParameterAnnotation(MyParam.class);
+        return methodParameter.hasParameterAnnotation(MyParam.class);
     }
 
     /**
@@ -26,12 +29,15 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         try {
-            HttpServletRequest request
-                    = (HttpServletRequest) nativeWebRequest.getNativeRequest();
+            HttpServletRequest request = (HttpServletRequest) nativeWebRequest.getNativeRequest();
             String paramName = methodParameter.getParameter().getName();
             Map<String, String[]> parameterMap = request.getParameterMap();
             String[] paramValues = parameterMap.get(paramName);
             if(paramValues!=null){
+                if(methodParameter.getParameterType().isAssignableFrom(Date.class)){
+                    //这个格式的日期
+                    return new SimpleDateFormat("yyyy-MM-dd").parse(paramValues[0]);
+                }
                 return "myParam("+paramValues[0]+")";
             }
         } catch (Exception e) {

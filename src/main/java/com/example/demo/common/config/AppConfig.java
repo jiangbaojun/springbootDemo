@@ -1,17 +1,19 @@
 package com.example.demo.common.config;
 
+import com.example.demo.common.async.properties.AsyncProperties;
+import com.example.demo.common.convert.MyConvert;
+import com.example.demo.common.filter.MyFilter;
+import com.example.demo.common.interceptor.MyInterceptor;
 import com.example.demo.common.param.MyHandlerMethodArgumentResolver;
 import com.example.demo.common.serialize.DynamicDateDeserialize;
 import com.example.demo.common.serialize.DynamicDateSerialize;
-import com.example.demo.common.async.properties.AsyncProperties;
-import com.example.demo.common.filter.MyFilter;
-import com.example.demo.common.interceptor.MyInterceptor;
 import com.example.demo.common.threadpool.properties.ThreadPoolProperties;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -74,5 +76,10 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new MyHandlerMethodArgumentResolver());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new MyConvert());
     }
 }

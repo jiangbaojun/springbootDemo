@@ -3,7 +3,6 @@ package com.example.demo.common;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class MyExceptionHandler {
     @ExceptionHandler
 	@ResponseBody
 	public String exceptionHandler1(HttpServletRequest request, Exception e) throws IOException {
-		System.out.println("未知异常:"+e);
+		e.printStackTrace();
 		request.setAttribute("errMsg", "异常信息");
        	return "发生异常:"+e.getMessage();
     }
