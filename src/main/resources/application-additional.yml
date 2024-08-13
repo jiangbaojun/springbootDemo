@@ -1,0 +1,5 @@
+server:
+  port: 90
+dept:
+  name: additional-name
+num: 6

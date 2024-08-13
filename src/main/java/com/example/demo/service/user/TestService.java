@@ -1,10 +1,14 @@
 package com.example.demo.service.user;
 
 import com.example.demo.mapper.user.TestMapper;
+import com.example.demo.util.SpringContextHolder;
+import com.example.demo.util.Tutil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -54,5 +58,35 @@ public class TestService {
         }
         System.out.println("end");
         return "okk";
+    }
+
+    /**
+     * 事务测试
+     */
+    @Transactional
+    public void ts1() {
+        String random = Tutil.getRandom(16);
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("userid", "xiaoming1_"+random);
+        params.put("id", random);
+        testMapper.addOrders(params);
+        TestService bean = SpringContextHolder.getBean(TestService.class);
+        bean.test2();
+//        test2();
+    }
+
+    @Transactional
+    public void test2() {
+        String random = Tutil.getRandom(16);
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("userid", "xiaoming21_"+random);
+        params.put("id", random);
+        testMapper.addOrders(params);
+
+        Map<String,String> params2 = new HashMap<String,String>();
+        params2.put("userid", "xiaoming22_"+random);
+        params2.put("id", random);
+        int a = 8/0;
+        testMapper.addOrders(params);
     }
 }

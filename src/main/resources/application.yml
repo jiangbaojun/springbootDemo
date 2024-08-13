@@ -10,6 +10,8 @@ spring:
     #   之前的旧版本，只引入spring.config.location声明的配置文件
     #   之后的新版本，会自动引入spring.profiles.active配置的对应文件，如application-dev.yml会被引入，即使spring.config.location不包含。如果想强制排除，可以设置环境变量来覆盖SPRING_CONFIG_LOCATION=abx
     active: prod, dev
+    # 包含配置文件，优先级最低
+    include: additional
 
 dept:
   name: main-name

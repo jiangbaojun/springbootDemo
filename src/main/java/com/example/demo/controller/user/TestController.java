@@ -43,6 +43,15 @@ public class TestController {
         return s1+"-------"+p1;
     }
 
+    /**
+     * 事务测试
+     */
+    @RequestMapping("/ts1")
+    public String t1(HttpServletRequest request){
+        testService.ts1();
+        return "ok";
+    }
+
     @RequestMapping("/sync")
     public String syncTest(HttpServletRequest request){
         testService.syncTest();
